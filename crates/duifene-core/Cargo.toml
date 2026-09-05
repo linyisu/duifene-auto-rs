@@ -1,0 +1,13 @@
+[package]
+name = "duifene-core"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+thiserror = { workspace = true }
+dirs = { workspace = true }
+rand = { workspace = true }
+reqwest = { workspace = true }

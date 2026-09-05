@@ -1,0 +1,17 @@
+[workspace]
+members = ["crates/*"]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+chrono = "0.4"
+thiserror = "2"
+dirs = "6"
+rand = "0.9"
+reqwest = { version = "0.12", default-features = false,
+            features = ["blocking", "json", "gzip", "rustls-tls"] }
