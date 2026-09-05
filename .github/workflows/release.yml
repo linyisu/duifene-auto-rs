@@ -25,6 +25,7 @@ jobs:
             pkg-config \
             libx11-dev \
             libxkbcommon-dev \
+            libxkbcommon-x11-dev \
             libwayland-dev \
             libfontconfig1-dev \
             libssl-dev
