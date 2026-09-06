@@ -41,9 +41,15 @@ jobs:
 
       - name: Package
         run: |
-          mkdir -p dist/duifene-auto-linux-x86_64
-          cp target/release/duifene-gui \
-            dist/duifene-auto-linux-x86_64/duifene-auto
+          package_root="dist/duifene-auto-linux-x86_64"
+          mkdir -p "$package_root/usr/bin"
+          mkdir -p "$package_root/usr/share/applications"
+          mkdir -p "$package_root/usr/share/icons/hicolor/256x256/apps"
+          cp target/release/duifene-gui "$package_root/usr/bin/duifene-auto"
+          cp packaging/linux/duifene-auto.desktop "$package_root/usr/share/applications/duifene-auto.desktop"
+          icon_path="$(find target/release/build/duifene-gui-*/out -name icon.png -print -quit)"
+          test -n "$icon_path"
+          cp "$icon_path" "$package_root/usr/share/icons/hicolor/256x256/apps/duifene-auto.png"
           tar -C dist -czf \
             duifene-auto-linux-x86_64.tar.gz \
             duifene-auto-linux-x86_64

@@ -1,3 +1,4 @@
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 use chrono::Local;
 use std::rc::Rc;
 use std::time::Instant;
@@ -1335,10 +1336,25 @@ fn format_elapsed(elapsed: std::time::Duration) -> String {
     )
 }
 
+fn application_icon() -> Option<Arc<image::RgbaImage>> {
+    #[cfg(target_os = "linux")]
+    {
+        let image = image::load_from_memory(include_bytes!(env!("DUIFENE_AUTO_ICON_PNG")))
+            .expect("failed to decode generated application icon")
+            .to_rgba8();
+        Some(Arc::new(image))
+    }
+    #[cfg(not(target_os = "linux"))]
+    {
+        None
+    }
+}
+
 fn main() {
     let app = gpui_kit::application().with_assets(AppAssets);
     app.run(move |cx| {
         gpui_kit::init(cx);
+        cx.set_app_identity("com.linysu.duifene-auto", "duifene-auto");
         theme::apply_paper_theme(cx);
 
         cx.bind_keys([KeyBinding::new("alt-q", Quit, None)]);
@@ -1355,6 +1371,7 @@ fn main() {
                             width: px(860.),
                             height: px(560.),
                         }),
+                        icon: application_icon(),
                         ..Default::default()
                     },
                     |window, cx| {
