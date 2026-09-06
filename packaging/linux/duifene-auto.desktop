@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=duifene-auto
+Comment=Duifene automatic check-in assistant
+Exec=duifene-auto
+Icon=duifene-auto
+Terminal=false
+Type=Application
+Categories=Utility;Education;
+StartupWMClass=duifene-auto
