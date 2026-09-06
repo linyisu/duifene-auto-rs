@@ -74,15 +74,12 @@ jobs:
         run: |
           New-Item -ItemType Directory -Force -Path dist | Out-Null
           Copy-Item target/release/duifene-gui.exe dist/duifene-auto.exe
-          Compress-Archive `
-            -Path dist/duifene-auto.exe `
-            -DestinationPath duifene-auto-windows-x86_64.zip
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: duifene-auto-windows-x86_64
-          path: duifene-auto-windows-x86_64.zip
+          path: dist/duifene-auto.exe
           if-no-files-found: error
 
   release:
@@ -104,7 +101,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: duifene-auto-windows-x86_64
-          path: dist
+          path: dist/windows-artifact
+
+      - name: Package Windows release
+        run: |
+          zip -j dist/duifene-auto-windows-x86_64.zip \
+            dist/windows-artifact/duifene-auto.exe
 
       - name: Publish release
         uses: softprops/action-gh-release@v2
